@@ -31,13 +31,13 @@ app.get('/', (req, res) => {
 app.use('/account', AccountRouter)
 app.use('/api', ApiRouter)
 
+// Erorr handler
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err)
   }
   res.status(500)
-  res.send('An booming error has occurred', { error: err })
-  return null
+  return res.send(`An error has occured, reason: "${err}"`)
 })
 
 app.listen(3000, () => {

@@ -8,8 +8,14 @@ router.post('/signup', async (req, res, next) => {
   try {
     const { body } = req
     const { username, password } = body
-    await User.create({ username, password })
-    res.send(`Signup for ${username} was succesful, hooray!! UWU`)
+    const result = await User.findOne({ username, password })
+    // if user already exists, then let go registration
+    if (result) {
+      res.send(`User "${username}" already exists`)
+    } else {
+      await User.create({ username, password })
+      res.send(`Signup for ${username} was succesful, hooray!! UWU`)
+    }
   } catch (error) {
     res.send('Signup failed, cries ;-;')
     next(error)
@@ -26,7 +32,6 @@ router.post('/login', async (req, res, next) => {
       res.send(`User: ${username} succesfully logged in`)
     } else {
       res.send(`Cannot find user: ${username}`)
-      next(new Error('User not found'))
     }
   } catch (error) {
     res.send('User login failed')

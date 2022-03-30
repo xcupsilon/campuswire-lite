@@ -9,7 +9,7 @@ router.get('/questions', async (req, res, next) => {
     const questions = await Question.find()
     res.json(questions) // Send back the questions and preserve the variable nature
   } catch (error) {
-    res.send('Error when fetching question')
+    res.send('Error occurred when fetching question')
     next(error)
   }
 })
