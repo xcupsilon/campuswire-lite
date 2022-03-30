@@ -17,16 +17,16 @@ router.post('/signup', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
-  const { body } = req
-  const { username, password } = body
-
   try {
+    const { body } = req
+    const { username, password } = body
     const result = await User.findOne({ username, password }) // get the user with matching username and password
     if (result) {
       req.session.username = username
       res.send(`User: ${username} succesfully logged in`)
     } else {
       res.send(`Cannot find user: ${username}`)
+      next(new Error('User not found'))
     }
   } catch (error) {
     res.send('User login failed')
