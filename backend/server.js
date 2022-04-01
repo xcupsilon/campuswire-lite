@@ -1,6 +1,7 @@
 const express = require('express')
 const cookieSession = require('cookie-session')
 const mongoose = require('mongoose')
+const path = require('path')
 
 // Routers
 const AccountRouter = require('./routes/account')
@@ -11,6 +12,8 @@ const app = express()
 const MONGO_URL = process.env.MONGODB_URL || 'mongodb+srv://xcyan:U6mBOiNH1jCQXnNe@cluster0.ffmax.mongodb.net/cw-lite?retryWrites=true&w=majority'
 
 app.use(express.json()) // Parse body using middleware
+
+app.use(express.static('dist')) // points to static folder
 
 // If connection fails, will show up here
 mongoose.connect(MONGO_URL, {
@@ -38,6 +41,16 @@ app.use((err, req, res, next) => {
   }
   res.status(500)
   return res.send(`An error has occured, reason: "${err}"`)
+})
+
+// set favicon
+app.get('/favicon.ico', (req, res) => {
+  res.status(404).send()
+})
+
+// set the initial entry point
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
 app.listen(3000, () => {
