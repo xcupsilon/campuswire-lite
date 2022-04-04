@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "parcel ./frontend/src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel frontend/src/index.html",
     "server": "nodemon backend/server.js",
@@ -33,6 +34,7 @@
     "nodemon": "^2.0.15",
     "parcel": "^2.4.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0"
   }
 }
