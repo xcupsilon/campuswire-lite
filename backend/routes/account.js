@@ -14,7 +14,7 @@ router.post('/signup', async (req, res, next) => {
       res.send(`User "${username}" already exists`)
     } else {
       await User.create({ username, password })
-      res.send(`Signup for ${username} was succesful, hooray!! UWU`)
+      res.send(`Signup for ${username} was succesful, hooray!!`)
     }
   } catch (error) {
     res.send('Signup failed, cries ;-;')
