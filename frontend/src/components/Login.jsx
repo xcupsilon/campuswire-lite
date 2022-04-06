@@ -20,7 +20,7 @@ const Login = () => {
             Log In
           </button>
           <h2 className="text-red-300 text-2xl inline">Don&apos;t have an account?</h2>
-          <Link to="/signup" className="text-2xl inline"> Sign up</Link>
+          {/* <Link to="/signup"> Sign up</Link> */}
         </div>
       </div>
     </div>
