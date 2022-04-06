@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import axios from 'axios'
 
-const Login = () => {
+const Signup = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [msg, setMsg] = useState('')
@@ -24,7 +24,7 @@ const Login = () => {
           <div className="mb-4">
             <input onChange={e => setPassword(e.target.value)} value={password} className="w-80 shadow border rounded-lg py-2 px-3 text-black text-base leading-tight focus:outline-none focus:shadow-outline focus:border-lemon" id="password" type="text" placeholder="Password" />
           </div>
-          <button onClick={() => createUser()} type="submit" className="w-20 shadow appearance-none border rounded-lg py-2 px-3 text-orange-700 bg-orange-200 text-base leading-tight">
+          <button onClick={e => createUser()} type="submit" className="w-20 shadow appearance-none border rounded-lg py-2 px-3 text-orange-700 bg-orange-200 text-base leading-tight">
             Sign Up
           </button>
           <p>
@@ -38,4 +38,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Signup
