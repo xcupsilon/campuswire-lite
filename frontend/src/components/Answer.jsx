@@ -6,7 +6,10 @@ const Answer = ({ _id }) => {
   const [answer, setAnswer] = useState('')
 
   const answerPost = async () => {
-    await axios.post('/api/questions/answer', { answer, _id })
+    await axios.post('/api/questions/answer', { _id, answer })
+      .then(response => {
+        console.log(response.data)
+      })
       .catch(error => {
         alert(`${error.response.data}`)
       })

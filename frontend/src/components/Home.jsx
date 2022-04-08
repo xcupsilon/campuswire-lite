@@ -56,18 +56,18 @@ const Home = () => {
 
   // Functional component that renders one of the question block in the question lists
   const QuestionBlock = ({ post }) => {
-    const onSubmit = (q, au, ans) => {
+    const onSubmit = (q, au, ans, postId) => {
       setDisplay(q, au, ans)
       setQuestionSelected(true)
+      setId(postId)
     }
 
     const {
       questionText: q, author: au, answer: ans, _id: postId,
     } = post
-    setId(postId)
     return (
       <div>
-        <button onClick={e => onSubmit(q, au, ans)} type="button" className="ml-5 p-3 px-4 bg-white w-full text-black text-left shadow-md rounded">{q}</button>
+        <button onClick={e => onSubmit(q, au, ans, postId)} type="button" className="ml-5 p-3 px-4 bg-white w-full text-black text-left shadow-md rounded">{q}</button>
       </div>
     )
   }
