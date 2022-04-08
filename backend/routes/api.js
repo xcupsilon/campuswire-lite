@@ -4,7 +4,7 @@ const router = express.Router()
 const Question = require('../models/question')
 const isAuthenticated = require('../middlewares/isAuthenticated')
 
-router.get('/questions', async (req, res, next) => {
+router.get('/questions', async (req, res) => {
   try {
     const questions = await Question.find()
     res.json(questions) // Send back the questions and preserve the variable nature
@@ -13,7 +13,7 @@ router.get('/questions', async (req, res, next) => {
   }
 })
 
-router.post('/questions/add', isAuthenticated, async (req, res, next) => {
+router.post('/questions/add', isAuthenticated, async (req, res) => {
   try {
     const { body, session } = req
     const { username } = session // Getting the author from the cookie :)
@@ -25,7 +25,7 @@ router.post('/questions/add', isAuthenticated, async (req, res, next) => {
   }
 })
 
-router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
+router.post('/questions/answer', isAuthenticated, async (req, res) => {
   try {
     const { body } = req
     const { _id, answer } = body

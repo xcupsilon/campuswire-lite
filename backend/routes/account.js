@@ -4,19 +4,19 @@ const router = express.Router()
 const User = require('../models/user')
 const isAuthenticated = require('../middlewares/isAuthenticated')
 
-router.get('/status', async (req, res, next) => {
+router.get('/status', async (req, res) => {
   try {
     if (req.session.username || req.session.username === '') {
-      res.json(true)
+      res.json({ username: req.session.username, status: true })
     } else {
-      res.json(false)
+      res.json({ status: false })
     }
   } catch (error) {
     res.status(400).send(`Getting user login status failed: ${error.message}`)
   }
 })
 
-router.post('/signup', async (req, res, next) => {
+router.post('/signup', async (req, res) => {
   try {
     const { body } = req
     const { username, password } = body
@@ -33,7 +33,7 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res) => {
   try {
     const { body } = req
     const { username, password } = body

@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-const AddPostModal = ({ setModalVisible, addPost }) => {
+const AddPostModal = ({ setModalVisible }) => {
   const [question, setQuestion] = useState('')
 
-  const submit = e => {
+  const addPost = async () => {
+    await axios.post('api/questions/add', { questionText: question })
+      .then(() => {
+      })
+      .catch(error => {
+        alert(`${error.response.data}`)
+      })
+  }
+
+  const submit = async e => {
     e.preventDefault()
     // Add a new post
-    addPost(question)
+    await addPost()
     setModalVisible(false)
   }
 
@@ -35,7 +44,7 @@ const AddPostModal = ({ setModalVisible, addPost }) => {
             <div className="relative p-6 flex-auto">
               <div>Add Question: </div>
               <div className="mb-4">
-                <input onChange={e => setQuestion(e.target.value)} value={question} className="w-80 h-36 mt-3 shadow border rounded-lg py-2 px-3 text-black text-base leading-tight focus:outline-none focus:shadow-outline focus:border-greentea" id="question" type="text" />
+                <textarea onChange={e => setQuestion(e.target.value)} value={question} className="form-control w-80 h-36 mt-3 shadow border rounded-lg py-2 px-3 text-black text-base leading-tight focus:outline-none focus:shadow-outline focus:border-greentea" id="question" type="text" />
               </div>
               <div className="flow-root">
                 <button type="submit" onClick={e => submit(e)} className="bg-dark_matcha text-white font-normal h-10 py-1 px-4 text-base rounded">
