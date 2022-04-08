@@ -11,9 +11,9 @@ const Home = () => {
   const [author, setAuthor] = useState('')
   const [answer, setAnswer] = useState('')
 
-  const [modalVisible, setModalVisible] = useState(false)
-
   const [loggedIn, setLoggedIn] = useState(false)
+
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     const getPosts = async () => {
@@ -26,6 +26,7 @@ const Home = () => {
       const { data } = (await axios.get('/account/status'))
       const li = data
       setLoggedIn(li)
+      console.log()
     }
 
     getPosts()
@@ -42,9 +43,13 @@ const Home = () => {
     setAnswer(ans)
   }
 
-  const questionBlock = post => {
-    const { q, au, ans } = post
-    return <button onClick={e => setDisplay(q, au, ans)} type="button" className="p-5 bg-white">{q}</button>
+  const QuestionBlock = ({ post }) => {
+    const { questionText: q, author: au, answer: ans } = post
+    return (
+      <div>
+        <button onClick={e => setDisplay(q, au, ans)} type="button" className="ml-8 p-5 bg-white text-black">{q}</button>
+      </div>
+    )
   }
 
   const Modal = () => {
@@ -76,9 +81,11 @@ const Home = () => {
       <div className="grid grid-cols-3 font-mono text-dark_matcha">
         <div className="col-span-1 m-5">
           <AddButton />
-          <div className="flex">
-            {console.log(posts)}
-            {/* {posts.map(post => questionBlock(post))} */}
+          <div className="flex flex-col">
+            {posts.map(post => {
+              const { _id } = post
+              return <QuestionBlock post={post} key={_id} />
+            })}
           </div>
         </div>
         <div className="col-span-2 m-5 ml-10 p-10 border-l-2 border-dark_matcha">
