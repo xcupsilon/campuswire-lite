@@ -4,6 +4,7 @@ import axios from 'axios'
 
 // components
 import AddPostModal from './AddPostModal'
+import Display from './Display'
 
 const Home = () => {
   const [posts, setPosts] = useState([])
@@ -26,15 +27,14 @@ const Home = () => {
       const { data } = (await axios.get('/account/status'))
       const li = data
       setLoggedIn(li)
-      console.log()
     }
 
     getPosts()
     checkLoginStatus()
   }, [])
 
-  const addPost = (q, au) => {
-    setPosts(...posts, { q, au: '', ans: '' })
+  const addPost = q => {
+    setPosts(...posts, { questionText: q })
   }
 
   const setDisplay = (q, au, ans) => {
@@ -47,7 +47,7 @@ const Home = () => {
     const { questionText: q, author: au, answer: ans } = post
     return (
       <div>
-        <button onClick={e => setDisplay(q, au, ans)} type="button" className="ml-8 p-5 bg-white text-black">{q}</button>
+        <button onClick={e => setDisplay(q, au, ans)} type="button" className="ml-5 p-3 px-4 bg-white w-full text-black text-left shadow-md rounded">{q}</button>
       </div>
     )
   }
@@ -63,45 +63,33 @@ const Home = () => {
     if (!loggedIn) {
       return (
         <Link to="/login">
-          <button type="button" className="w-full shadow appearance-none border rounded-lg mb-3 py-4 px-8 text-lg font-semibold text-light_matcha bg-dark_matcha leading-tight">Login to submit questions</button>
+          <button type="button" className="w-full shadow appearance-none border rounded-lg mb-5 py-4 px-8 text-lg font-semibold text-light_matcha bg-dark_matcha leading-tight">Login to submit questions</button>
         </Link>
       )
     }
     return (
       <>
-        <button onClick={e => setModalVisible(true)} type="button" className="w-full shadow appearance-none border rounded-lg m-5 mb-3 py-4 px-8 ml-5 text-lg font-semibold text-light_matcha bg-dark_matcha leading-tight">Add new Questions +</button>
+        <button onClick={e => setModalVisible(true)} type="button" className="w-full shadow first-letter:appearance-none border rounded-lg m-5 mb-5 py-4 px-8 ml-5 text-lg font-semibold text-light_matcha bg-dark_matcha leading-tight">Add new Questions +</button>
         <Modal />
       </>
     )
   }
 
   return (
-    <div className="bg-matcha">
-      <div className="font-bold text-5xl p-7 pl-10 shadow-md bg-light_matcha text-dark_matcha">Campuswire Lite</div>
+    <div className="bg-light_matcha w-screen h-screen">
+      <div className="font-bold text-5xl p-7 pl-10 shadow-md bg-white text-dark_matcha">Campuswire Lite</div>
       <div className="grid grid-cols-3 font-mono text-dark_matcha">
         <div className="col-span-1 m-5">
           <AddButton />
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-3">
             {posts.map(post => {
               const { _id } = post
               return <QuestionBlock post={post} key={_id} />
             })}
           </div>
         </div>
-        <div className="col-span-2 m-5 ml-10 p-10 border-l-2 border-dark_matcha">
-          <h2 className="text-3xl">{question}</h2>
-          <div>
-            Author:
-          </div>
-          <div>
-            {author}
-          </div>
-          <div>
-            Answer:
-          </div>
-          <div>
-            {answer}
-          </div>
+        <div className="col-span-2 m-5 ml-10 pl-10 pt-5 border-l-2 border-dark_matcha">
+          <Display question={question} author={author} answer={answer} />
         </div>
       </div>
     </div>
