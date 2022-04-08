@@ -9,8 +9,7 @@ router.get('/questions', async (req, res, next) => {
     const questions = await Question.find()
     res.json(questions) // Send back the questions and preserve the variable nature
   } catch (error) {
-    res.send('Error occurred when fetching question')
-    next(error)
+    res.status(400).send('Error occurred when fetching question')
   }
 })
 
@@ -20,10 +19,9 @@ router.post('/questions/add', isAuthenticated, async (req, res, next) => {
     const { username } = session // Getting the author from the cookie :)
     const { questionText } = body
     await Question.create({ questionText, author: username })
-    res.send(`Question created for "${questionText}" by ${username}, waiting for responses hehe!`)
+    res.send(`Question created for "${questionText}" by ${username}`)
   } catch (error) {
-    res.send('Error occured when adding question, nyooo!')
-    next(error)
+    res.status(400).send('Error occured when adding question!')
   }
 })
 
@@ -36,10 +34,9 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
     await Question.updateOne({ _id }, {
       questionText, username, answer, _id,
     })
-    res.send(`Succesfully uploaded answer "${answer}" for "${questionText}", you are the best!`)
+    res.send(`Succesfully uploaded answer "${answer}" for "${questionText}"`)
   } catch (error) {
-    res.send('Error occured when updating answer, HMMMMM!')
-    next(error)
+    res.status(400).send('Error occured when updating answer!')
   }
 })
 

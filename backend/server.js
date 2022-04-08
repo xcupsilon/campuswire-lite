@@ -28,19 +28,20 @@ app.use(cookieSession({
 }))
 
 app.get('/', (req, res) => {
-  res.send('Hello from Root uwu')
+  res.send('hello from root')
 })
 
 app.use('/account', AccountRouter)
 app.use('/api', ApiRouter)
 
+// TODO
 // Erorr handler
 app.use((err, req, res, next) => {
   if (res.headersSent) {
-    return next(err)
+    return
   }
   res.status(500)
-  return res.send(`An error has occured, reason: "${err}"`)
+  res.send(`An error has occured, reason: "${err.message}"`)
 })
 
 // set favicon

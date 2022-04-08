@@ -10,17 +10,20 @@ const Login = () => {
   const navigate = useNavigate()
 
   const login = async () => {
-    await axios.post('account/login', { username, password }).catch(
-      error => alert(`Login failed, reason: ${error}`),
-    )
-    navigate('/home')
+    await axios.post('/account/login', { username, password })
+      .then(() => {
+        navigate('/')
+      })
+      .catch(error => {
+        alert(`${error.response.data}`)
+      })
   }
 
   return (
     <div className="flex justify-center mt-20">
       <div className="flex bg-light_matcha w-3/4 h-4/6 p-20 rounded-3xl shadow-lg">
         <div className="justify-start">
-          <h1 className="text-dark_matcha font-semibold text-7xl font-mono">Signup</h1>
+          <h1 className="text-dark_matcha font-semibold text-7xl font-mono">Login</h1>
           <div className="mb-4">
             <input onChange={e => setUsername(e.target.value)} value={username} className="w-80 shadow border rounded-lg py-2 px-3 mt-10 text-dark_matcha text-base leading-tight focus:outline-none focus:shadow-outline focus:border-lemon" id="email" type="text" placeholder="Username" />
           </div>
