@@ -72,14 +72,6 @@ const Home = () => {
     )
   }
 
-  // Pop-up modal used for adding new questions
-  const Modal = () => {
-    if (modalVisible) {
-      return <AddPostModal setModalVisible={setModalVisible} />
-    }
-    return <></>
-  }
-
   // Button used to add new question or direct user to log in if they have not
   const AddButton = () => {
     if (!loggedIn) {
@@ -109,7 +101,11 @@ const Home = () => {
       <div className="grid grid-cols-3 font-mono text-dark_matcha">
         <div className="col-span-1 m-5">
           <AddButton />
-          <Modal />
+          {
+            modalVisible && (
+              <AddPostModal setModalVisible={setModalVisible} />
+            )
+          }
           <div className="flex flex-col gap-3">
             {posts.map(post => {
               const { _id } = post
@@ -121,7 +117,7 @@ const Home = () => {
           <Display question={question} author={author} answer={answer} />
           {
             loggedIn && questionSelected && (
-              <Answer _id={id} />
+              <Answer _id={id} renderAnswer={setAnswer} />
             )
           }
         </div>
